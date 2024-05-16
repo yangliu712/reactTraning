@@ -1,13 +1,34 @@
+import React, { useState } from "react";
 import Post from "./Post";
 import NewPost from "./NewPost";
+import Modal from "./Modal";
 import classes from "./PostList.module.css";
-function PostList() {
+
+function PostList({ isPosting, onClose }) {
+  const [enteredBody, setEnteredBody] = useState("");
+  const [enteredAuthor, setEnteredAuthor] = useState("");
+
+  function textareaChangeHandler(event) {
+    setEnteredBody(event.target.value);
+  }
+
+  function authorChangeHandler(event) {
+    setEnteredAuthor(event.target.value);
+  }
+
   return (
     <>
-      <NewPost></NewPost>
+      {isPosting && (
+        <Modal onClose={onClose}>
+          <NewPost
+            textareaChange={textareaChangeHandler}
+            authorChange={authorChangeHandler}
+          />
+        </Modal>
+      )}
       <ul className={classes.posts}>
-        <Post author="heihei" b="asflasjflkjsdlfajsl"></Post>
-        <Post author="heiheihei" b="asflasjflkjsdlfajslasdfasdfa"></Post>
+        <Post author={enteredAuthor} body={enteredBody} />
+        <Post author="heiheihei" body="asflasjflkjsdlfajslasdfasdfa" />
       </ul>
     </>
   );

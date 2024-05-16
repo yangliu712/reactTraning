@@ -1,12 +1,6 @@
 import classes from "./NewPost.module.css";
-import { useState } from "react";
-function NewPost() {
-  const [enteredbody, setenterbody] = useState();
 
-  function changeBodylister(event) {
-    setenterbody(event.target.value);
-    console.log(event.target.value);
-  }
+function NewPost({ authorChange, textareaChange, onCancel }) {
   return (
     <form className={classes.form}>
       <p>
@@ -14,14 +8,21 @@ function NewPost() {
         <textarea
           id="body"
           required
-          row={3}
-          onChange={changeBodylister}
+          rows={3}
+          onChange={textareaChange}
         ></textarea>
       </p>
-      <p>{enteredbody}</p>
+
       <p>
         <label htmlFor="name">your name</label>
-        <input type="text" id="name" required />
+        <input type="text" id="name" required onChange={authorChange} />
+      </p>
+
+      <p>
+        <button>Submit</button>
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
       </p>
     </form>
   );
